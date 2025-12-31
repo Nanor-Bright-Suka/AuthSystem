@@ -1,0 +1,21 @@
+
+# Git files
+.git
+.gitignore
+
+# Node / Java / Python dependencies (install inside image)
+node_modules
+target/
+build/
+
+# Logs, temp files
+*.log
+*.tmp
+*.swp
+
+# Environment files (if you pass them via docker-compose or secrets)
+.env
+
+# IDE files
+.vscode/
+.idea/
