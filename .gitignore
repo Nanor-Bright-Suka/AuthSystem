@@ -32,5 +32,16 @@ build/
 ### VS Code ###
 .vscode/
 
-# Environment / secrets
+# Env files
 .env
+.env.*
+
+docker-compose.dev.yml
+
+*.txt
+.githattributes
+
+# Spring Boot properties files
+application-dev.properties
+application-prod.properties
+application-test.properties
