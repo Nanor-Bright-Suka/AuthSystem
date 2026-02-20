@@ -25,6 +25,17 @@ jobs:
           java-version: 21
 
       - name: Build & Run Tests
+        env:
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
+          SPRING_PROFILES_ACTIVE: ${{ secrets.SPRING_PROFILES_ACTIVE }}
+          TOKEN_EXPIRATION_IN_MINUTES: ${{ secrets.TOKEN_EXPIRATION_IN_MINUTES }}
+          REFRESH_TOKEN_EXPIRATION_IN_DAYS: ${{ secrets.REFRESH_TOKEN_EXPIRATION_IN_DAYS }}
         run: ./mvnw clean verify
 
   # -----------------------------
