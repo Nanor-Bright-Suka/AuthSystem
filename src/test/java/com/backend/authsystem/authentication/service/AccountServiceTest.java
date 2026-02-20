@@ -9,8 +9,7 @@ import com.backend.authsystem.authentication.entity.AccountEntity;
 import com.backend.authsystem.authentication.entity.RefreshTokenEntity;
 import com.backend.authsystem.authentication.entity.RoleEntity;
 import com.backend.authsystem.authentication.enums.RoleEnum;
-import com.backend.authsystem.authentication.exception.InvalidCredentialsException;
-import com.backend.authsystem.authentication.exception.UserNotFoundException;
+import com.backend.authsystem.authentication.exception.*;
 import com.backend.authsystem.authentication.repository.AccountRepository;
 import com.backend.authsystem.authentication.repository.RefreshTokenRepository;
 import com.backend.authsystem.authentication.repository.RoleRepository;
@@ -24,6 +23,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 import java.time.Duration;
 import java.time.Instant;
@@ -94,7 +94,7 @@ class AccountServiceTest {
         when(accountRepository.findByEmail(newUser.email().trim()))
                 .thenReturn(Optional.of(new AccountEntity()));
 
-        assertThrows(IllegalArgumentException.class, () -> accountService.createUserService(newUser));
+        assertThrows(UserAlreadyExistException.class, () -> accountService.createUserService(newUser));
 
         verify(accountRepository, never()).save(any());
         verify(roleRepository, never()).findByRoleName(any());
@@ -108,8 +108,8 @@ class AccountServiceTest {
         when(accountRepository.findByEmail(newUser.email().trim())).thenReturn(Optional.empty());
         when(roleRepository.findByRoleName(RoleEnum.ROLE_USER)).thenReturn(Optional.empty());
 
-        IllegalStateException exception = assertThrows(
-                IllegalStateException.class,
+        RoleNotFoundException exception = assertThrows(
+                RoleNotFoundException.class,
                 () -> accountService.createUserService(newUser)
         );
         assertEquals("Default role not found", exception.getMessage());
@@ -461,9 +461,8 @@ class AccountServiceTest {
     void shouldThrowExceptionWhenRefreshTokenDoesNotExist() {
         when(refreshTokenRepository.findByTokenHash(any()))
                 .thenReturn(Optional.empty());
-
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
+        InvalidTokenException exception = assertThrows(
+                InvalidTokenException.class,
                 () -> accountService.refreshService("rawToken")
         );
 
@@ -478,8 +477,8 @@ class AccountServiceTest {
         when(refreshTokenRepository.findByTokenHash(any()))
                 .thenReturn(Optional.of(storedToken));
 
-        IllegalStateException exception = assertThrows(
-                IllegalStateException.class,
+        InvalidTokenException exception = assertThrows(
+                InvalidTokenException.class,
                 () -> accountService.refreshService("rawToken")
         );
 
@@ -494,8 +493,8 @@ class AccountServiceTest {
         when(refreshTokenRepository.findByTokenHash(any()))
                 .thenReturn(Optional.of(storedToken));
 
-        IllegalStateException exception = assertThrows(
-                IllegalStateException.class,
+        InvalidTokenException exception = assertThrows(
+                InvalidTokenException.class,
                 () -> accountService.refreshService("rawToken")
         );
 
@@ -597,8 +596,8 @@ class AccountServiceTest {
         when(refreshTokenRepository.findByTokenHash(any()))
                 .thenReturn(Optional.empty());
 
-        IllegalArgumentException ex = assertThrows(
-                IllegalArgumentException.class,
+        InvalidTokenException ex = assertThrows(
+                InvalidTokenException.class,
                 () -> accountService.logout("rawToken")
         );
 
@@ -607,8 +606,8 @@ class AccountServiceTest {
 
     @Test
     void shouldThrowExceptionWhenRawTokenIsNull() {
-        IllegalArgumentException ex = assertThrows(
-                IllegalArgumentException.class,
+        MissingTokenException ex = assertThrows(
+                MissingTokenException.class,
                 () -> accountService.logout(null)
         );
         assertEquals("Refresh token cannot be null or blank", ex.getMessage());
@@ -616,8 +615,8 @@ class AccountServiceTest {
 
     @Test
     void shouldThrowExceptionWhenRawTokenIsBlank() {
-        IllegalArgumentException ex = assertThrows(
-                IllegalArgumentException.class,
+        MissingTokenException ex = assertThrows(
+                MissingTokenException.class,
                 () -> accountService.logout("   ")
         );
         assertEquals("Refresh token cannot be null or blank", ex.getMessage());
@@ -629,7 +628,7 @@ class AccountServiceTest {
                 .thenReturn(Optional.empty());
 
         assertThrows(
-                IllegalArgumentException.class,
+                InvalidTokenException.class,
                 () -> accountService.logout("rawToken")
         );
 
@@ -692,8 +691,8 @@ class AccountServiceTest {
         when(accountRepository.findByEmail(email))
                 .thenReturn(Optional.empty());
 
-        IllegalArgumentException ex = assertThrows(
-                IllegalArgumentException.class,
+        UserNotFoundException ex = assertThrows(
+                UserNotFoundException.class,
                 () -> accountService.logoutAll(email)
         );
 
