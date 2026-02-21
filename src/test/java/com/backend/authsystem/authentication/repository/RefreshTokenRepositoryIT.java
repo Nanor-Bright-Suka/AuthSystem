@@ -19,10 +19,9 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
+@ActiveProfiles("test")
 @DataJpaTest
 @Testcontainers
-@ActiveProfiles("test")
 class RefreshTokenRepositoryIT {
 
 

@@ -22,10 +22,9 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
+@ActiveProfiles("test")
 @DataJpaTest
 @Testcontainers
-@ActiveProfiles("test")
 class AccountRepositoryIT {
 
     @SuppressWarnings("resource")

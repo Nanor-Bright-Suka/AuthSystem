@@ -1,7 +1,6 @@
 package com.backend.authsystem.authentication.controllerTest;
 
 
-import com.backend.authsystem.authentication.config.SecurityEnvironments;
 import com.backend.authsystem.authentication.dto.UserRegisterDto;
 import com.backend.authsystem.authentication.dto.UserloginDto;
 import com.backend.authsystem.authentication.entity.AccountEntity;
@@ -44,14 +43,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
+@ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
 @Testcontainers
-@ActiveProfiles("test")
 class AuthControllerIntegrationIT {
 
 
@@ -75,9 +72,7 @@ class AuthControllerIntegrationIT {
 
     @Autowired
     private JwtService jwtService;
-
-    @Autowired
-    private SecurityEnvironments securityEnvironments;
+    
 
 
     @SuppressWarnings("resource")
@@ -104,7 +99,7 @@ class AuthControllerIntegrationIT {
         );
     }
 
-    private AccountEntity insertTestUser(String email, String rawPassword) {
+    private AccountEntity insertTestUser(String email) {
         RoleEntity role = RoleEntity.builder()
                 .roleId(UUID.randomUUID())
                 .roleName(RoleEnum.ROLE_USER)
@@ -117,7 +112,7 @@ class AuthControllerIntegrationIT {
                 .firstname("Nanor")
                 .lastname("Bright")
                 .email(email)
-                .password(passwordEncoder.encode(rawPassword))
+                .password(passwordEncoder.encode("password123"))
                 .createdAt(Instant.now())
                 .build();
         user.getRoles().add(role);
@@ -230,7 +225,7 @@ class AuthControllerIntegrationIT {
 
         @Test
         void shouldLoginSuccessfully() throws Exception {
-            insertTestUser("nanor@test.com", "password123");
+            insertTestUser("nanor@test.com");
 
             UserloginDto loginDto = new UserloginDto("password123", "nanor@test.com");
 
@@ -265,7 +260,7 @@ class AuthControllerIntegrationIT {
 
         @Test
         void shouldReturnInvalidCredentialsWhenPasswordIsWrong() throws Exception {
-            insertTestUser("nanor@test.com", "password123");
+            insertTestUser("nanor@test.com");
 
             UserloginDto loginDto = new UserloginDto("wrongpassword", "nanor@test.com");
 
@@ -280,7 +275,7 @@ class AuthControllerIntegrationIT {
 
         @Test
         void shouldReturnBadRequestForInvalidEmailFormat() throws Exception {
-            insertTestUser("nanor@test.com", "password123");
+            insertTestUser("nanor@test.com");
 
             UserloginDto loginDto = new UserloginDto("password123", "not-an-email");
 
@@ -316,7 +311,7 @@ class AuthControllerIntegrationIT {
 
         @Test
         void shouldRefreshTokensSuccessfully() throws Exception {
-            AccountEntity user = insertTestUser("nanor@test.com", "password123");
+            AccountEntity user = insertTestUser("nanor@test.com");
             String rawRefreshToken = jwtService.generateRefreshToken(user);
 
             mockMvc.perform(post("/api/v1/auth/refresh")
@@ -331,7 +326,7 @@ class AuthControllerIntegrationIT {
 
         @Test
         void shouldFailWithInvalidRefreshToken() throws Exception {
-            AccountEntity user = insertTestUser("nanor@test.com", "password123");
+            AccountEntity user = insertTestUser("nanor@test.com");
             insertValidRefreshToken(user, "valid-token"); // real token different
 
             mockMvc.perform(post("/api/v1/auth/refresh")
@@ -344,7 +339,7 @@ class AuthControllerIntegrationIT {
 
         @Test
         void shouldFailIfRefreshTokenRevoked() throws Exception {
-            AccountEntity user = insertTestUser("nanor@test.com", "password123");
+            AccountEntity user = insertTestUser("nanor@test.com");
             String rawToken = UUID.randomUUID().toString();
             RefreshTokenEntity token = insertValidRefreshToken(user, rawToken);
 
@@ -361,7 +356,7 @@ class AuthControllerIntegrationIT {
 
         @Test
         void shouldFailIfRefreshTokenExpired() throws Exception {
-            AccountEntity user = insertTestUser("nanor@test.com", "password123");
+            AccountEntity user = insertTestUser("nanor@test.com");
             String rawToken = UUID.randomUUID().toString();
 
             RefreshTokenEntity token = RefreshTokenEntity.builder()
@@ -383,7 +378,7 @@ class AuthControllerIntegrationIT {
 
         @Test
         void shouldRotateRefreshToken() throws Exception {
-            AccountEntity user = insertTestUser("nanor@test.com", "password123");
+            AccountEntity user = insertTestUser("nanor@test.com");
             String oldToken = jwtService.generateRefreshToken(user);
 
             mockMvc.perform(post("/api/v1/auth/refresh")
@@ -413,7 +408,7 @@ class AuthControllerIntegrationIT {
 
         @Test
         void shouldLogoutSuccessfully() throws Exception {
-            AccountEntity user = insertTestUser("user@test.com", "password123");
+            AccountEntity user = insertTestUser("user@test.com");
             String token = jwtService.generateRefreshToken(user);
 
             mockMvc.perform(post("/api/v1/auth/logout")
@@ -456,7 +451,7 @@ class AuthControllerIntegrationIT {
         @Test
         void shouldHandleAlreadyRevokedTokenIdempotently() throws Exception {
             // Arrange
-            AccountEntity user = insertTestUser("user@test.com", "password123");
+            AccountEntity user = insertTestUser("user@test.com");
             String token = jwtService.generateRefreshToken(user);
 
             RefreshTokenEntity saved = refreshTokenRepository

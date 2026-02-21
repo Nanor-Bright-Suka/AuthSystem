@@ -26,9 +26,10 @@ jobs:
           java-version: 21
 
       - name: Build & Run Tests
-        env:
-         SPRING_PROFILES_ACTIVE: test
         run: ./mvnw clean verify
+        env:
+         TESTCONTAINERS_RYUK_DISABLED: true
+
 
   # -----------------------------
   # Stage 2: Docker Build
