@@ -1,0 +1,3 @@
+
+ALTER TABLE my_users
+    ALTER COLUMN created_at DROP DEFAULT;

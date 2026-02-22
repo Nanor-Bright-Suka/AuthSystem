@@ -2,32 +2,29 @@
 services:
   server:
     container_name: spring-auth-server
-    image: spring-auth-server:dev
+    image: spring-auth-server:prod
     build:
       context: .
-      target: development
+      target: production
     ports:
       - "${SERVER_PORT}:8080"
-      - "${DEBUGGER_PORT}:8000"
     depends_on:
       db:
         condition: service_healthy
-    environment:
-      - POSTGRES_URL=${POSTGRES_URL}
+    env_file:
+      - .env.prod
+
 
   db:
     container_name: spring-auth-db
     image: postgres:16
     volumes:
       - db-data:/var/lib/postgresql/data
-    environment:
-       - POSTGRES_DB=${POSTGRES_DB}
-       - POSTGRES_USER=${POSTGRES_USER}
-       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    ports:
-      - "${POSTGRES_PORT}:5432"
+    env_file:
+      - .env.prod
+
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U authuser -d authdb"]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 10s
       timeout: 10s
       retries: 5
