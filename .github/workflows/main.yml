@@ -27,8 +27,7 @@ jobs:
 
       - name: Build & Run Tests
         run: ./mvnw clean verify
-#        env:
-#         TESTCONTAINERS_RYUK_DISABLED: true
+
 
 
   # -----------------------------

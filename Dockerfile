@@ -40,8 +40,8 @@ CMD ["java", "-jar", "app.jar"]
 FROM eclipse-temurin:21-jre-alpine AS production
 
 # Create non-root group and user
-RUN groupadd --system nanor \
-    && useradd --system --gid nanor --create-home nanor
+RUN addgroup -S nanor \
+       && adduser -S nanor -G nanor
 
 WORKDIR /app
 
