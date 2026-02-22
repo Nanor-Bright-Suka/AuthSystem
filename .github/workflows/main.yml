@@ -28,8 +28,6 @@ jobs:
       - name: Build & Run Tests
         run: ./mvnw clean verify
 
-
-
   # -----------------------------
   # Stage 2: Docker Build & Push to Docker Hub
   # -----------------------------
