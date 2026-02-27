@@ -1,7 +1,6 @@
 package com.backend.authsystem.authentication.exception;
 
 
-import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -50,6 +49,32 @@ public class GlobalHandler {
 @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFoundException ex) {
         return buildErrorResponse(ex, HttpStatus.NOT_FOUND);
+    }
+
+
+@ExceptionHandler(CourseNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleCourseNotFoundException(CourseNotFoundException ex) {
+        return buildErrorResponse(ex, HttpStatus.NOT_FOUND);
+    }
+
+@ExceptionHandler(InvalidCourseStateException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidCourseStateException(InvalidCourseStateException ex) {
+        return buildErrorResponse(ex, HttpStatus.CONFLICT);
+    }
+
+@ExceptionHandler(PermissionNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handlePermissionNotFoundException(PermissionNotFoundException ex) {
+        return buildErrorResponse(ex, HttpStatus.NOT_FOUND);
+    }
+
+@ExceptionHandler(DuplicatePermissionException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicatePermissionException(DuplicatePermissionException ex) {
+        return buildErrorResponse(ex, HttpStatus.CONFLICT);
+    }
+
+@ExceptionHandler(DuplicateRoleException.class)
+    public ResponseEntity<ErrorResponse> handleDuplicateRoleException(DuplicateRoleException ex) {
+        return buildErrorResponse(ex, HttpStatus.CONFLICT);
     }
 
 

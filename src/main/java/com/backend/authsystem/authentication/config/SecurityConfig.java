@@ -57,6 +57,10 @@ public class SecurityConfig {
                         // ACCOUNT endpoints
                         .requestMatchers("/api/v1/account/**").authenticated()
 
+                        .requestMatchers("/api/v1/course/**").authenticated()
+
+                        .requestMatchers("/api/v1/admin/**").authenticated()
+
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

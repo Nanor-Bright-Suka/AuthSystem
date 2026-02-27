@@ -2,17 +2,31 @@ package com.backend.authsystem.authentication.enums;
 
 public enum PermissionEnum {
 
+    //User-level permissions
+
     //profile-level
-    PROFILE_VIEW,
-    PROFILE_UPDATE,
+    PROFILE_VIEW, //(USER)
+    PROFILE_UPDATE, //(USER)
 
     // account-level
-    ACCOUNT_VIEW,
-    PASSWORD_CHANGE,
+    ACCOUNT_VIEW, //(USER)
+    PASSWORD_CHANGE, //(USER)
+
+    // lecturer-level
+    // course
+    COURSE_CREATE, //(LECTURER)
+    COURSE_UPDATE, //(LECTURER)
+    COURSE_PUBLISH, //(LECTURER)
+    COURSE_OPEN_ENROLLMENT, //(LECTURER)
+    COURSE_CLOSE_ENROLLMENT, //(LECTURER)
+    COURSE_START, //(LECTURER)
+    COURSE_COMPLETE, //(LECTURER)
+    COURSE_ARCHIVE, //(STUDENT)
+    COURSE_VIEW, //(LECTURER, STUDENT)
+    COURSE_VIEW_ALL, //(LECTURER, STUDENT)
 
 
     // student-level
-    COURSE_VIEW,
     COURSE_ENROLL,
     ASSIGNMENT_VIEW,
     ASSIGNMENT_SUBMIT,
@@ -26,16 +40,6 @@ public enum PermissionEnum {
     CLASS_ANNOUNCEMENT_RELAY,
     CLASS_FEEDBACK_COLLECT,
     CLASS_FEEDBACK_FORWARD,
-
-
-    // lecturer-level
-    // course
-    COURSE_CREATE,
-    COURSE_DELETE,
-    COURSE_UPDATE,
-    COURSE_PUBLISH,
-    COURSE_REP_ASSIGN,
-    STUDENT_VIEW,
 
     // materials
     COURSE_MATERIAL_CREATE,
@@ -51,7 +55,8 @@ public enum PermissionEnum {
 
 
     // admin-level (system)
-    ROLE_ASSIGN,
+    ROLE_ASSIGN, //(ADMIN)
+    PERMISSION_ASSIGN, //(ADMIN)
     USER_MANAGE
 
 }
