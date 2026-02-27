@@ -18,3 +18,32 @@ Testing – Fully tested with unit and integration tests for critical endpoints.
 ****
 
 ![Swagger Documentation](documentation/jwtdocs.png)
+
+
+
+***
+## Authorization & Course Module Update
+
+- Added course management endpoints
+- Added role assignment to users
+- Added permission assignment to roles
+- Enforced RBAC using `@PreAuthorize`
+
+### Highlights
+
+- Secure course lifecycle management
+- Centralized exception handling
+- Duplicate role/permission validation
+- Admin-only assignment control
+
+Screenshots demonstrating the endpoints are included below.
+
+### ROLE AND PERMISSION ASSIGNMENT
+
+
+![Swagger Documentation](documentation/role-assignment.png)
+
+
+### COURSE MANAGEMENT
+
+![Swagger Documentation](documentation/courses.png)
