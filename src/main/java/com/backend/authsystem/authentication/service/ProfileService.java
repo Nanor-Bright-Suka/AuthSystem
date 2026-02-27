@@ -4,9 +4,10 @@ import com.backend.authsystem.authentication.dto.ProfileResponseDto;
 import com.backend.authsystem.authentication.dto.ProfileUpdateDto;
 import com.backend.authsystem.authentication.entity.ProfileEntity;
 import com.backend.authsystem.authentication.entity.AccountEntity;
+import com.backend.authsystem.authentication.exception.UserNotFoundException;
 import com.backend.authsystem.authentication.repository.ProfileRepository;
 import com.backend.authsystem.authentication.repository.AccountRepository;
-import com.backend.authsystem.authentication.ProfileMapper;
+import com.backend.authsystem.authentication.mapper.ProfileMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +22,8 @@ public class ProfileService {
 
     public ProfileResponseDto getMyProfileService() {
         String email = authenticatedUserService.getCurrentUserEmail();
-        System.out.println("Fetching profile for user: " + email);
         AccountEntity user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalStateException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
 
         ProfileEntity profile = profileRepository.findByUser(user)
@@ -41,10 +41,10 @@ public class ProfileService {
         String email = authenticatedUserService.getCurrentUserEmail();
 
         AccountEntity user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalStateException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         ProfileEntity profile = profileRepository.findByUser(user)
-                .orElseGet(() -> profileMapper.createDefaultProfileUpdate(dto, user));
+                .orElseGet(() -> profileMapper.createDefaultProfileUpdate(user));
 
         profileMapper.updateDefaultProfile(profile, dto);
 

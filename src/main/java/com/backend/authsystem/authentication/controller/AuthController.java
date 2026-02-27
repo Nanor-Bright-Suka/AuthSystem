@@ -35,6 +35,7 @@ public class AuthController {
             summary = "Health Check",
             description = "Endpoint to check if the authentication system is running. Returns a simple greeting message."
     )
+
     @GetMapping("/health")
     public String health() {
         return "Hello from Auth System!";

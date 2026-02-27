@@ -2,13 +2,10 @@ package com.backend.authsystem.authentication.controller;
 
 import com.backend.authsystem.authentication.dto.ProfileResponseDto;
 import com.backend.authsystem.authentication.dto.ProfileUpdateDto;
-import com.backend.authsystem.authentication.dto.UserRegisterDto;
 import com.backend.authsystem.authentication.service.ProfileService;
 import com.backend.authsystem.authentication.util.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +21,6 @@ public class ProfileController {
 
     private final ProfileService profileService;
 
-
-
     @Operation(
             summary = "Get My Profile",
             description = "Retrieves the profile information of the currently authenticated user. Requires 'PROFILE_VIEW' authority."
@@ -33,9 +28,7 @@ public class ProfileController {
     @GetMapping("/viewMe")
     @PreAuthorize("hasAuthority('PROFILE_VIEW')")
     public ResponseEntity<ApiResponse<ProfileResponseDto>> getMyProfile() {
-        System.out.println("The first controller log");
         ProfileResponseDto profileResponseDto = profileService.getMyProfileService();
-        System.out.println("The response from the profile " +  profileResponseDto);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ApiResponse<>(true, "Profile retrieved successfully.", profileResponseDto));

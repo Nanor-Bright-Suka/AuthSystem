@@ -1,4 +1,4 @@
-package com.backend.authsystem.authentication;
+package com.backend.authsystem.authentication.mapper;
 
 import com.backend.authsystem.authentication.dto.ProfileResponseDto;
 import com.backend.authsystem.authentication.dto.ProfileUpdateDto;
@@ -12,7 +12,7 @@ import java.util.UUID;
 @Component
 public class ProfileMapper {
 
-    public ProfileEntity createDefaultProfileUpdate(ProfileUpdateDto dto, AccountEntity user) {
+    public ProfileEntity createDefaultProfileUpdate(AccountEntity user) {
         return ProfileEntity.builder()
                 .profileId(UUID.randomUUID())
                 .user(user)

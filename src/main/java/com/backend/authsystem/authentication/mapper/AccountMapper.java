@@ -1,4 +1,4 @@
-package com.backend.authsystem.authentication;
+package com.backend.authsystem.authentication.mapper;
 
 import com.backend.authsystem.authentication.dto.AccountResponseDto;
 import com.backend.authsystem.authentication.entity.AccountEntity;

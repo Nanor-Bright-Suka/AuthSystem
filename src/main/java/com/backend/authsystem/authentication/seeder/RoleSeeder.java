@@ -97,11 +97,16 @@ public class RoleSeeder implements ApplicationRunner {
                 PermissionEnum.ASSIGNMENT_GRADE,
                 PermissionEnum.ASSIGNMENT_CREATE,
                 PermissionEnum.COURSE_CREATE,
-                PermissionEnum.COURSE_DELETE,
                 PermissionEnum. COURSE_UPDATE,
                 PermissionEnum.COURSE_PUBLISH,
-                PermissionEnum.COURSE_REP_ASSIGN,
-                PermissionEnum.STUDENT_VIEW,
+                PermissionEnum.COURSE_OPEN_ENROLLMENT,
+                PermissionEnum.COURSE_CLOSE_ENROLLMENT,
+                PermissionEnum.COURSE_START,
+                PermissionEnum.COURSE_COMPLETE,
+                PermissionEnum.COURSE_ARCHIVE,
+                PermissionEnum.COURSE_VIEW_ALL,
+                PermissionEnum.COURSE_CREATE,
+                PermissionEnum.COURSE_VIEW,
                 PermissionEnum.COURSE_MATERIAL_CREATE,
                 PermissionEnum.COURSE_MATERIAL_UPDATE,
                 PermissionEnum.COURSE_MATERIAL_DELETE,
@@ -123,6 +128,7 @@ public class RoleSeeder implements ApplicationRunner {
 
         add(admin,
                 PermissionEnum.ROLE_ASSIGN,
+                PermissionEnum.PERMISSION_ASSIGN,
                 PermissionEnum.USER_MANAGE
         );
     }
@@ -130,7 +136,7 @@ public class RoleSeeder implements ApplicationRunner {
     private void add(RoleEntity role, PermissionEnum... perms) {
         for (PermissionEnum p : perms) {
             PermissionEntity perm = permissionRepository.findByPermissionName(p).orElseThrow(() ->
-                    new IllegalStateException("Permission not found"));;
+                    new IllegalStateException("Permission not found"));
             role.addPermission(perm);
         }
         roleRepository.save(role);

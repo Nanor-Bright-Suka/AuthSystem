@@ -12,7 +12,7 @@ import com.backend.authsystem.authentication.repository.RefreshTokenRepository;
 import com.backend.authsystem.authentication.repository.RoleRepository;
 import com.backend.authsystem.authentication.repository.AccountRepository;
 import com.backend.authsystem.authentication.util.HashToken;
-import com.backend.authsystem.authentication.AccountMapper;
+import com.backend.authsystem.authentication.mapper.AccountMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
