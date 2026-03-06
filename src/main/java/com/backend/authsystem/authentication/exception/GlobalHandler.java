@@ -77,6 +77,48 @@ public class GlobalHandler {
         return buildErrorResponse(ex, HttpStatus.CONFLICT);
     }
 
+@ExceptionHandler(CourseStateException.class)
+    public ResponseEntity<ErrorResponse> handleCourseStateException(CourseStateException ex) {
+        return buildErrorResponse(ex, HttpStatus.BAD_REQUEST);
+    }
+
+@ExceptionHandler(AssignmentPermissionException.class)
+    public ResponseEntity<ErrorResponse> handleAssignmentPermissionException(AssignmentPermissionException ex) {
+        return buildErrorResponse(ex, HttpStatus.UNAUTHORIZED);
+    }
+
+@ExceptionHandler(AssignmentNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleAssignmentNotFoundException(AssignmentNotFoundException ex) {
+        return buildErrorResponse(ex, HttpStatus.NOT_FOUND);
+    }
+
+@ExceptionHandler(AssignmentValidationException.class)
+    public ResponseEntity<ErrorResponse> handleAssignmentValidationException(AssignmentValidationException ex) {
+        return buildErrorResponse(ex, HttpStatus.BAD_REQUEST);
+    }
+
+@ExceptionHandler(FileSizeExceededException.class)
+    public ResponseEntity<ErrorResponse> handleFileSizeExceededException(FileSizeExceededException ex) {
+        return buildErrorResponse(ex, HttpStatus.BAD_REQUEST);
+    }
+
+@ExceptionHandler(FileTypeValidationException.class)
+    public ResponseEntity<ErrorResponse> handleFileTypeValidationException(FileTypeValidationException ex) {
+        return buildErrorResponse(ex, HttpStatus.CONFLICT);
+    }
+
+
+@ExceptionHandler(AssignmentSubmissionNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleAssignmentSubmissionNotFoundException(AssignmentSubmissionNotFoundException ex) {
+        return buildErrorResponse(ex, HttpStatus.NOT_FOUND);
+    }
+
+
+@ExceptionHandler(GradeSubmissionException.class)
+    public ResponseEntity<ErrorResponse> handleGradeSubmissionException(GradeSubmissionException ex) {
+        return buildErrorResponse(ex, HttpStatus.BAD_REQUEST);
+    }
+
 
 
 
