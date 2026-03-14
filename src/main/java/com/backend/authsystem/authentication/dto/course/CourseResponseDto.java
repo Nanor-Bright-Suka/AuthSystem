@@ -1,4 +1,4 @@
-package com.backend.authsystem.authentication.dto;
+package com.backend.authsystem.authentication.dto.course;
 
 import com.backend.authsystem.authentication.enums.CourseState;
 import com.backend.authsystem.authentication.enums.Semester;

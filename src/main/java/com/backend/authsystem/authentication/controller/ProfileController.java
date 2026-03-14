@@ -1,7 +1,7 @@
 package com.backend.authsystem.authentication.controller;
 
-import com.backend.authsystem.authentication.dto.ProfileResponseDto;
-import com.backend.authsystem.authentication.dto.ProfileUpdateDto;
+import com.backend.authsystem.authentication.dto.profile.ProfileResponseDto;
+import com.backend.authsystem.authentication.dto.profile.ProfileUpdateDto;
 import com.backend.authsystem.authentication.service.ProfileService;
 import com.backend.authsystem.authentication.util.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;

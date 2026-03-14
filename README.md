@@ -96,3 +96,21 @@ Supported operations:
 - Retrieve the list of students enrolled in a course
 
 ![Swagger Documentation](documentation/enrollment.png)
+
+
+# Course Materials
+
+ This module allows students to view and download  course materials  and provides endpoints for lecturers to manage course materials.
+
+## Features
+
+- Lecturers can upload course materials (PDF, DOCX, or video links)
+
+- Students can view and download materials for courses they are enrolled in
+
+- Soft delete support for course materials
+
+- Secure access: only lecturers or enrolled students can access the materials
+
+![Swagger Documentation](documentation/course-material.png)
+

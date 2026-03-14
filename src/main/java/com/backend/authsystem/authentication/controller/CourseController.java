@@ -1,9 +1,9 @@
 package com.backend.authsystem.authentication.controller;
 
 
-import com.backend.authsystem.authentication.dto.CourseCreateRequestDto;
-import com.backend.authsystem.authentication.dto.CourseResponseDto;
-import com.backend.authsystem.authentication.dto.CourseUpdateRequestDto;
+import com.backend.authsystem.authentication.dto.course.CourseCreateRequestDto;
+import com.backend.authsystem.authentication.dto.course.CourseResponseDto;
+import com.backend.authsystem.authentication.dto.course.CourseUpdateRequestDto;
 import com.backend.authsystem.authentication.service.AuthenticatedUserService;
 import com.backend.authsystem.authentication.service.CourseService;
 import com.backend.authsystem.authentication.util.ApiResponse;

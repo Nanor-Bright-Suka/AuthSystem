@@ -1,4 +1,4 @@
-package com.backend.authsystem.authentication.dto;
+package com.backend.authsystem.authentication.dto.assignment;
 
 import com.backend.authsystem.authentication.enums.AssignmentState;
 import lombok.Builder;
