@@ -1,9 +1,9 @@
 package com.backend.authsystem.authentication.service;
 
 
-import com.backend.authsystem.authentication.dto.AssignmentCreateRequestDto;
-import com.backend.authsystem.authentication.dto.AssignmentResponseDto;
-import com.backend.authsystem.authentication.dto.AssignmentUpdateRequestDto;
+import com.backend.authsystem.authentication.dto.assignment.AssignmentCreateRequestDto;
+import com.backend.authsystem.authentication.dto.assignment.AssignmentResponseDto;
+import com.backend.authsystem.authentication.dto.assignment.AssignmentUpdateRequestDto;
 import com.backend.authsystem.authentication.entity.AccountEntity;
 import com.backend.authsystem.authentication.entity.AssignmentEntity;
 import com.backend.authsystem.authentication.entity.CourseEntity;

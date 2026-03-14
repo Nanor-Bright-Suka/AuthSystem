@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.util.unit.DataSize;
 
 import java.io.IOException;
 
@@ -43,8 +43,8 @@ public class AssignmentSubmissionService {
     @Value("${file.upload.directory}")
     private String uploadDirectory;
 
-    @Value("${file.upload.max-size-bytes}")
-    private long maxFileSize;
+    @Value("${file.upload.max-size-assignment}")
+    private DataSize maxFileSize;
 
 
     private String  sanitizeFileName(String filename) {
@@ -95,9 +95,9 @@ public class AssignmentSubmissionService {
             throw new AssignmentStateException("Student has already submitted this assignment");
         }
 
-        if (file.getSize() > maxFileSize) {
+        if (file.getSize() > maxFileSize.toBytes()) {
                 log.warn("File size {} exceeds max allowed {} for assignment {}", file.getSize(), maxFileSize, assignmentId);
-            throw new IllegalArgumentException("File too large");
+            throw new FileTypeValidationException("File too large");
         }
         // 4️⃣ Validate file type
         if (file.getOriginalFilename() == null || !file.getOriginalFilename().toLowerCase().endsWith(".pdf")) {

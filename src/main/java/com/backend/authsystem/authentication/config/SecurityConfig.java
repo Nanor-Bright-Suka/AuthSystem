@@ -67,6 +67,8 @@ public class SecurityConfig {
 
                         .requestMatchers("/api/v1/course-enrollment/**").authenticated()
 
+                        .requestMatchers("/api/v1/course-materials/**").authenticated()
+
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

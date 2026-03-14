@@ -1,7 +1,5 @@
-package com.backend.authsystem.authentication.dto;
+package com.backend.authsystem.authentication.dto.profile;
 
-
-import jakarta.validation.constraints.NotBlank;
 
 public record ProfileResponseDto(
         String firstName,

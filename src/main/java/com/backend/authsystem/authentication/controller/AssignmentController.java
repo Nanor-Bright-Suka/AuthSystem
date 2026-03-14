@@ -1,9 +1,9 @@
 package com.backend.authsystem.authentication.controller;
 
 
-import com.backend.authsystem.authentication.dto.AssignmentCreateRequestDto;
-import com.backend.authsystem.authentication.dto.AssignmentResponseDto;
-import com.backend.authsystem.authentication.dto.AssignmentUpdateRequestDto;
+import com.backend.authsystem.authentication.dto.assignment.AssignmentCreateRequestDto;
+import com.backend.authsystem.authentication.dto.assignment.AssignmentResponseDto;
+import com.backend.authsystem.authentication.dto.assignment.AssignmentUpdateRequestDto;
 import com.backend.authsystem.authentication.service.AssignmentService;
 import com.backend.authsystem.authentication.util.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;

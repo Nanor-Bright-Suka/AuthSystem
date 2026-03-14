@@ -45,3 +45,5 @@ docker-compose.dev.yml
 application-dev.properties
 
 uploads/
+
+*.http

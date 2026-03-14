@@ -1,4 +1,4 @@
-package com.backend.authsystem.authentication.dto;
+package com.backend.authsystem.authentication.dto.assignment;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Future;

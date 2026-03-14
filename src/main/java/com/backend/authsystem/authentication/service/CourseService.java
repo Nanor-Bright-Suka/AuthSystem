@@ -1,9 +1,9 @@
 package com.backend.authsystem.authentication.service;
 
 
-import com.backend.authsystem.authentication.dto.CourseCreateRequestDto;
-import com.backend.authsystem.authentication.dto.CourseResponseDto;
-import com.backend.authsystem.authentication.dto.CourseUpdateRequestDto;
+import com.backend.authsystem.authentication.dto.course.CourseCreateRequestDto;
+import com.backend.authsystem.authentication.dto.course.CourseResponseDto;
+import com.backend.authsystem.authentication.dto.course.CourseUpdateRequestDto;
 import com.backend.authsystem.authentication.entity.AccountEntity;
 import com.backend.authsystem.authentication.entity.CourseEntity;
 import com.backend.authsystem.authentication.enums.CourseState;
@@ -47,7 +47,7 @@ public class CourseService {
         AccountEntity user = authenticatedUserService.getCurrentUserAccount();
 
         CourseEntity course = CourseMapper.toEntity(request, user);
-        log.debug("Mapped CourseCreateRequestDto to Course entity: {}", course);
+        log.debug("Mapped CourseCreateRequestDto to Course entity: {}", course.getCourseId());
 
       courseRepository.save(course);
         log.info("Course {} created successfully by user {}", course.getCourseId(), user.getEmail());
@@ -61,7 +61,7 @@ public class CourseService {
          authenticatedUserService.getCurrentUserAccount();
 
         CourseEntity course = getCourseEntity(courseId);
-        log.debug("Fetched course entity for update: {}", course);
+        log.debug("Fetched course entity for update: {}", course.getCourseId());
 
         if (course.getState() != CourseState.CREATED && course.getState() != CourseState.PUBLISHED) {
             log.warn("Blocked course update. courseId={}, state={}", courseId, course.getState());
@@ -69,7 +69,7 @@ public class CourseService {
         }
 
         CourseMapper.updateEntity(course, request);
-        log.debug("Course entity after update mapping: {}", course);
+        log.debug("Course entity after update mapping: {}", course.getCourseId());
         return CourseMapper.toResponse(course);
     }
 
@@ -79,7 +79,7 @@ public class CourseService {
           authenticatedUserService.getCurrentUserAccount();
 
         CourseEntity course = getCourseEntity(courseId);
-        log.debug("Fetched course entity for publishing: {}", course);
+        log.debug("Fetched course entity for publishing: {}", course.getCourseId());
 
 
         if (course.getState() != CourseState.CREATED) {
@@ -89,7 +89,7 @@ public class CourseService {
 
         course.setState(CourseState.PUBLISHED);
         log.info("Course {} published successfully", courseId);
-        log.debug("Course entity after publishing: {}", course);
+        log.debug("Course entity after publishing: {}", course.getCourseId());
 
         return CourseMapper.toResponse(course);
     }
@@ -102,7 +102,7 @@ public class CourseService {
         authenticatedUserService.getCurrentUserAccount();
 
         CourseEntity course = getCourseEntity(courseId);
-        log.debug("Fetched course entity for enrollment: {}", course);
+        log.debug("Fetched course entity for enrollment: {}", course.getCourseId());
 
         if (course.getState() != CourseState.PUBLISHED) {
             log.warn("Blocked enrollment attempt. courseId={}, state={}", courseId, course.getState());
@@ -113,7 +113,7 @@ public class CourseService {
 
         course.setState(CourseState.ENROLLMENT_OPEN);
         log.info("Course {} enrolled successfully", courseId);
-        log.debug("Course entity after enrollment: {}", course);
+        log.debug("Course entity after enrollment: {}", course.getCourseId());
 
         return CourseMapper.toResponse(course);
     }
@@ -124,7 +124,7 @@ public class CourseService {
         authenticatedUserService.getCurrentUserAccount();
 
         CourseEntity course = getCourseEntity(courseId);
-        log.debug("Fetched course entity for close enrollment: {}", course);
+        log.debug("Fetched course entity for close enrollment: {}", course.getCourseId());
 
         if (course.getState() != CourseState.ENROLLMENT_OPEN) {
             log.warn("Blocked close enrollment attempt. courseId={}, state={}", courseId, course.getState());
@@ -133,7 +133,7 @@ public class CourseService {
 
         course.setState(CourseState.ENROLLMENT_CLOSED);
         log.info("Course {} close enrollment successfully", courseId);
-        log.debug("Course entity after close enrollment: {}", course);
+        log.debug("Course entity after close enrollment: {}", course.getCourseId());
 
         return CourseMapper.toResponse(course);
     }
@@ -143,7 +143,7 @@ public class CourseService {
         authenticatedUserService.getCurrentUserAccount();
 
         CourseEntity course = getCourseEntity(courseId);
-        log.debug("Fetched course entity for start course: {}", course);
+        log.debug("Fetched course entity for start course: {}", course.getCourseId());
 
         if (course.getState() != CourseState.ENROLLMENT_CLOSED) {
             log.warn("Blocked start course attempt. courseId={}, state={}", courseId, course.getState());
@@ -152,7 +152,7 @@ public class CourseService {
 
         course.setState(CourseState.ACTIVE);
         log.info("Course {} started successfully", courseId);
-        log.debug("Course entity after start course: {}", course);
+        log.debug("Course entity after start course: {}", course.getCourseId());
 
         return CourseMapper.toResponse(course);
     }
@@ -162,7 +162,7 @@ public class CourseService {
         authenticatedUserService.getCurrentUserAccount();
 
         CourseEntity course = getCourseEntity(courseId);
-        log.debug("Fetched course entity for course completion: {}", course);
+        log.debug("Fetched course entity for course completion: {}", course.getCourseId());
 
         if (course.getState() != CourseState.ACTIVE) {
             log.warn("Blocked course completion attempt. courseId={}, state={}", courseId, course.getState());
@@ -171,7 +171,7 @@ public class CourseService {
 
         course.setState(CourseState.COMPLETED);
         log.info("Course {} completed successfully", courseId);
-        log.debug("Course entity after course completion: {}", course);
+        log.debug("Course entity after course completion: {}", course.getCourseId());
 
         return CourseMapper.toResponse(course);
     }
@@ -181,7 +181,7 @@ public class CourseService {
         authenticatedUserService.getCurrentUserAccount();
 
         CourseEntity course = getCourseEntity(courseId);
-        log.debug("Fetched course entity for course archive: {}", course);
+        log.debug("Fetched course entity for course archive: {}", course.getCourseId());
 
         if (course.getState() != CourseState.COMPLETED) {
             log.warn("Blocked course archive attempt. courseId={}, state={}", courseId, course.getState());
@@ -190,7 +190,7 @@ public class CourseService {
 
         course.setState(CourseState.ARCHIVED);
         log.info("Course {} archived successfully", courseId);
-        log.debug("Course entity after course archive: {}", course);
+        log.debug("Course entity after course archive: {}", course.getCourseId());
 
         return CourseMapper.toResponse(course);
     }

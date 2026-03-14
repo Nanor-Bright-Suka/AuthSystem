@@ -128,10 +128,27 @@ public class GlobalHandler {
     public ResponseEntity<ErrorResponse> handleEnrollmentConflictException(EnrollmentConflictException ex) {
         return buildErrorResponse(ex, HttpStatus.BAD_REQUEST);
     }
+
+
  @ExceptionHandler(EnrollmentNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleEnrollmentNotFoundException(EnrollmentNotFoundException ex) {
         return buildErrorResponse(ex, HttpStatus.NOT_FOUND);
     }
+
+ @ExceptionHandler(CourseMaterialNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleCourseMaterialNotFoundException(CourseMaterialNotFoundException ex) {
+        return buildErrorResponse(ex, HttpStatus.NOT_FOUND);
+    }
+
+
+@ExceptionHandler(CourseMaterialStateException.class)
+public ResponseEntity<ErrorResponse> handleCourseMaterialStateException(CourseMaterialStateException ex) {
+    return buildErrorResponse(ex, HttpStatus.CONFLICT);
+}
+
+
+
+
 
 
 

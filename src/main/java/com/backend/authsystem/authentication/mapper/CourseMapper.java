@@ -1,9 +1,9 @@
 package com.backend.authsystem.authentication.mapper;
 
 
-import com.backend.authsystem.authentication.dto.CourseCreateRequestDto;
-import com.backend.authsystem.authentication.dto.CourseResponseDto;
-import com.backend.authsystem.authentication.dto.CourseUpdateRequestDto;
+import com.backend.authsystem.authentication.dto.course.CourseCreateRequestDto;
+import com.backend.authsystem.authentication.dto.course.CourseResponseDto;
+import com.backend.authsystem.authentication.dto.course.CourseUpdateRequestDto;
 import com.backend.authsystem.authentication.entity.AccountEntity;
 import com.backend.authsystem.authentication.entity.CourseEntity;
 import com.backend.authsystem.authentication.enums.CourseState;
